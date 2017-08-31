@@ -1,0 +1,24 @@
+#include "colors.inc"
+
+//Place the camera
+camera {
+  orthographic
+  sky <0,0,1>          //Don't change this
+  direction <-1,0,0>   //Don't change this  
+  right <0,1,0>     //Don't change this
+  up <0,0,3.0>     //Don't change this
+  location  <300,55,125>  //Camera location
+  look_at   <55,55,125>    //Where camera is pointing
+  angle 40      //Angle of the view--increase to see more, decrease to see less
+}
+
+//Ambient light to "brighten up" darker pictures
+global_settings { ambient_light White }
+
+light_source{ <1000,0,200> color White}
+
+//Set a background color
+background { color White }
+
+// 5CB 
+
