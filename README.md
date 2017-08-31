@@ -46,7 +46,7 @@ latter case you would need to provide the first and last number to the script, i
 density, and average cos(beta), and plots them. An example command for running the 
 script would be:
 
-./sZ_cosZ.py  -p <psf file> -t <dcd file> -n <number of bins> -b <first frame> 
+./sZ_cosZ.py  -p \<psf file> -t <dcd file> -n <number of bins> -b <first frame> 
 -e <last frame>
 
 Alternatively, you can just do "./sZ_cosZ.py --help" to see all input options.
