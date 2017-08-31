@@ -3,14 +3,15 @@
 This project contains several python scripts that I wrote over years to analyze the 
 trajectories of atomistic MD simulations. The scripts make use 
 of MDAnalysis library (http://www.mdanalysis.org/). I used version 0.10.0 of the 
-library at the time. The syntaxes might be slightly different in newer versions.
-Most of the scripts can be adapted for use in similar systems such as lipid membranes.  
-Some scripts perform trivial calculations and some others accomplish pretty 
-sophisticated analysis. Currently, there are two main folders in this project.
+library at the time. The syntax might be slightly different in newer versions.
+Most of the scripts should be easily adaptable for use in similar systems such 
+as lipid membranes.  Some scripts perform trivial calculations and some others
+accomplish pretty sophisticated analysis. Currently, there are two main folders
+in this project.
 
 1) 1D: This folder contains scripts to analyze thin films of liquid crystals 
-(both free-standing films and systems in contact with an aqueous phase). Please 
-cite the following papers when you use those scripts:
+(free-standing films and systems in contact with aqueous phases). Please 
+cite the following papers when you use the scripts in this folder:
 
 - “Understanding atomic-scale behavior of liquid crystals at aqueous interfaces”
 H. Ramezani-Dakhel, M. Sadati, M. Rahimi, A. Ramirez-Hernandez, Benoît Roux, and
@@ -30,131 +31,135 @@ use these scripts:
 M. Rahimi, H. Ramezani-Dakhel, R. Zhang, A. Ramirez-Hernandez, N. L. Abbott, 
 and J. J. de Pablo, Nature Communications, 8, 15064, 2017.
 
-Here I provide a brief description of the main scripts in this project. 
-Please feel free to explore other files as you wish. I assume that you have
-psf and dcd files. You still should be able to use the scripts with small modifications
-if you use other file formats.
+Here I provide a brief description of the main codes in this project. 
+Please feel free to explore other files in the folders as you wish. I assume that you have
+psf and dcd files from you simulations. In case you use other file formats, you 
+still should be able to use the scripts with some small modifications.
 
 1) 1D
 
 Please note that all scripts can read a single trajectory file (e.g. myoutput.dcd)
-or sequences of trajectory file that are named as 1.dcd, 2.dcd, ..., n.dcd. In the
-latter case you would need to provide the first and last number to the script, i.e.
-1 and n. 
+or sequences of trajectory files that are named 1.dcd, 2.dcd, ..., N.dcd. In the
+latter case you would need to provide the first and last numbers to the script, i.e.
+1 and N. 
 
 1.1. sZ_cosZ.py: This script computes the profile of P2 order parameter, number 
 density, and average cos(beta), and plots them. An example command for running the 
 script would be:
 
-./sZ_cosZ.py  -p <psf file> -t <dcd file> -n <number of bins> -b <first frame> 
--e <last frame>
+./sZ_cosZ.py  -p \<psf file> -t \<dcd file> -n \<number of bins> -b \<first frame> 
+-e \<last frame>
 
-Alternatively, you can just do "./sZ_cosZ.py --help" to see all input options.
+Alternatively, you can do "./sZ_cosZ.py --help" to see all input options.
 
 1.2. tensorZ.py: This script computes the profile of scalar order parameter (S), 
-and nematic director and plot them for you. To run the script you can do:
+and components of nematic director (nk) and plots them for you.
+To run the script you can do:
 
-./tensorZ.py  -p <psf file> -t <dcd file> -n <number of bins> -b <first frame> 
--e <last frame>
+./tensorZ.py  -p \<psf file> -t \<dcd file> -n \<number of bins> -b \<first frame> 
+-e \<last frame>
 
-Alternatively, you can just do "./tensorZ.py --help" to see all input options.
+Alternatively, you can run "./tensorZ.py --help" to see all input options.
 
 1.3. anchoring.py: This script calculates the profile of anchoring strength. To 
 run the script you can issue the following command:
 
-./anchoring.py  -p <psf file> -t <dcd file> -n <number of bins> 
--T <Temperature in Kelvin> -b <first frame> -e <last frame> 
+./anchoring.py  -p \<psf file> -t \<dcd file> -n \<number of bins> 
+-T \<Temperature in Kelvin> -b \<first frame> -e \<last frame> 
 
-Alternatively, you can just do "./anchoring.py --help" to see all input options.
+Alternatively, you can do "./anchoring.py --help" to see all input options.
 
-1.4. electron_density.py: This script computes the electron density profile as 
+1.4. electron_density.py: This script computes the profile of electron density as 
 a function of z. A sample command to run the script would be: 
 
-./electron_density.py -p <psf file> -t <dcd file> -d <bin size in angstrom> 
--s <atom selection text> -o <output file>  -b <first frame> -e <last frame>
+./electron_density.py -p \<psf file> -t \<dcd file> -d \<bin size in angstrom> 
+-s \<atom selection text> -o \<output file>  -b \<first frame> -e \<last frame>
 
-Alternatively, you can just do "./electron_density.py --help" to see all input options.
+Alternatively, you can run "./electron_density.py --help" to see all input options.
 
-1.5. mass_density.py: Computes the mass density profile asa a function of z. 
+1.5. mass_density.py: Computes the mass density profile as a function of z. 
 To run the script you can issue the following command:
 
-./mass_density.py -p <psf file> -t <dcd file> -d <bin size in angstrom> 
--s <atom selection text> -o <output file>  -b <first frame> -e <last frame>
+./mass_density.py -p \<psf file> -t \<dcd file> -d \<bin size in angstrom> 
+-s \<atom selection text> -o \<output file>  -b \<first frame> -e \<last frame>
 
-Alternatively, you can just do "./mass_density.py --help" to see all input options.
+Alternatively, you can just do "./mass_density.py --help" to see input options.
 
-1.6. polarization.py: Calculates the polarization density profile. The script currently
-works for a system that contain 5CB, and water. It can easily be adapted for other 
-systems. To use this script you can do:
+1.6. polarization.py: Calculates the polarization density profile of individual 
+components in the system. The script currently works for a system that contains 
+5CB, and water but it can easily be adapted to other systems. To use this script
+you can do:
 
-./polarization.py -p <psf file> -t <dcd file> -d <bin size in angstrom> 
--b <first frame> -e <last frame>
+./polarization.py -p \<psf file> -t \<dcd file> -d \<bin size in angstrom> 
+-b \<first frame> -e \<last frame>
 
 Alternatively, you can just do "./polarization.py --help" to see all input options.
 
-1.7. dielectric.py: This script computes dielectric constant profile of different 
+1.7. dielectric.py: This script computes dielectric constant profile of individual 
 components in a thin film. To use the script you can do:
 
-./dielectric.py  -p  <psf filename> -t <dcd filename> -d <binsize in angstrom> 
--s <atom selection command> -o <output filename> -b <first frame> -e <last frame>
+./dielectric.py  -p  \<psf filename> -t \<dcd filename> -d \<binsize in angstrom> 
+-s \<atom selection command> -o \<output filename> -b \<first frame> -e \<last frame>
 
-Alternatively, you can just do "./dielectric.py --help" to see all input options.
+Alternatively, you can type "./dielectric.py --help" to see all input options.
 
 1.8. dist.py: Computes distribution profile of individual components in a thin film.
 An example command to run the script would be:
 
-./dist.py -p <psf filename> -t <dcd filename> -d <binsize in angstrom> 
--s <atom selection command> -o <output filename> -b <first frame> -e <last frame>
+./dist.py -p \<psf filename> -t \<dcd filename> -d \<binsize in angstrom> 
+-s \<atom selection command> -o \<output filename> -b \<first frame> -e \<last frame>
 
 Alternatively, you can just do "./dist.py --help" to see all input options.
 
-1.9. inter*.py: These scripts reads the output data of other scripts (P2, S, etc), 
-and coordinates to generate inputs for POV-Ray. These are used to make snapshots. 
+1.9. inter*.py: These scripts reads the output of other scripts (P2, S, etc), 
+as well as the coordinates of atoms to generate inputs for POV-Ray. 
+These are then used to make snapshots. 
 An example command for using the script to generate the input for POV-Ray would be:
 
-./inter*.py -t <dcd filename> -p <psf filename> -l <lower color bound> 
--u <upper color bound> -r <header file> -o <output name>   -i <input name>
+./inter*.py -t \<dcd filename> -p \<psf filename> -l \<lower color bound> 
+-u \<upper color bound> -r \<header file> -o \<output name>   -i \<input name>
 
 Alternatively, you can just do "./inter*.py --help" to see all input options.
 
 2) 2D
 
 Please note that all scripts can read a single trajectory file (e.g. myoutput.dcd)
-or sequences of trajectory file that are named as 1.dcd, 2.dcd, ..., n.dcd. In the
+or sequences of trajectory files that are named 1.dcd, 2.dcd, ..., N.dcd. In the
 latter case you would need to provide the first and last number to the script, i.e.
-1 and n. 
+1 and N. 
 
 2.1. Q_vector.py: This script computes 2D map of scalar order parameter (S), 
-and nematic director and outputs the data. To run the script you can do:
+and vectors of nematic director and outputs the data. To run the script you can do:
 
-./Q_vector.py -p <psf filename> -t <dcd filename> 
--nx <# of xbins for S calculations> -ny <# of xbins for S calculations>
--vx <# of xbins for director calculations> -vy <# of xbins for director calculations>
--b <first frame> -e <last frame>
+./Q_vector.py -p \<psf filename> -t \<dcd filename> 
+-nx \<# of xbins for S calculations> -ny \<# of xbins for S calculations>
+-vx \<# of xbins for director calculations> -vy \<# of xbins for director calculations>
+-b \<first frame> -e \<last frame>
 
 You can also do "Q_vector.py --help" to see more information.
 
-2.2. densityProfile_defectArea.py: This script calculated the profile of scalar
+2.2. densityProfile_defectArea.py: This script computes the profile of scalar
 order parameter in different directions (e.g. main diagonal, secondary diagonal) 
 as well as the size of the defect area in a two dimensional system. To use the 
 script you can do:
 
-./densityProfile_defectArea.py -p <psf filename> -t <dcd filename>  -s <shape of the central bubble>
+./densityProfile_defectArea.py -p \<psf filename> -t \<dcd filename>
+-s \<shape of the central bubble>
 
 You can also do "densityProfile_defectArea.py --help" to see more information.
 
 2.3. anchoring.py: This script calculates the profile of anchoring strength. To 
 run the script you can issue the following command:
 
-./anchoring.py  -p <psf file> -t <dcd file> -n <number of bins> 
--T <Temperature in Kelvin> -s <shape of the central bubble> -b <first frame> -e <last frame>
+./anchoring.py  -p \<psf file> -t \<dcd file> -n \<number of bins> 
+-T \<Temperature in Kelvin> -s \<shape of the central bubble> -b \<first frame> -e \<last frame>
 
 You can also do "./anchoring.py --help" to see more information.
 
 2.4. dwf.py: Compute a 2D map of Debye-Waller factor. To use the code you can do:
 
-./dwf.py -p <psf file> -t <dcd file> -nx <# of xbins> -ny <# of xbins> 
--s <shape of the central bubble> -b <first frame> -e <last frame>
+./dwf.py -p \<psf file> -t \<dcd file> -nx \<# of xbins> -ny \<# of xbins> 
+-s \<shape of the central bubble> -b \<first frame> -e \<last frame>
 
 
 You can also do "./dwf.py --help" to see more information.
