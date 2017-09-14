@@ -59,6 +59,14 @@ parser.add_argument("-l",
                     action="store", nargs='?',
                     required=False, dest="lastFileName", type=int,
                     help="The name of the last trajectory file before dot")
+parser.add_argument("-sn",
+                    action="store", nargs='?', default="name NY1",
+                    required=False, dest="atom_selection_N",
+                    help="Atom selection argument for N")
+parser.add_argument("-sc",
+                    action="store", nargs='?', default="name CA12",
+                    required=False, dest="atom_selection_C",
+                    help="Atom selection argument for C")
 
 
 args = parser.parse_args()
@@ -74,9 +82,9 @@ start_frame = args.start_frame
 end_frame = args.end_frame
 firstFile = args.firstFileName
 lastFile = args.lastFileName
+atom_selection_N = args.atom_selection_N
+atom_selection_C = args.atom_selection_C
 
-atom_selection_N = "name NY1"
-atom_selection_C = "name CA12"
 
 time1 = time.time()
 output_file = open(output_filename + "_scaler","w")

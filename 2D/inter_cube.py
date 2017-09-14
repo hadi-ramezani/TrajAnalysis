@@ -43,6 +43,10 @@ parser.add_argument("-c",
                     action="store", nargs='?', default = int(2),
                     required=False, dest="columnNum", type = int,
                     help="the column number in the output file for plotting")
+parser.add_argument("-s",
+                    action="store", nargs='?', default="all",
+                    required=False, dest="atom_selection",
+                    help="Atom selection argument")
 
 
 args = parser.parse_args()
@@ -54,6 +58,7 @@ headerFile = args.head
 output_filename = args.output
 input_filename = args.input
 columnNum = args.columnNum
+atom_selection = args.atom_selection
 
 print traj_filename
 # Read the trj and gro file
@@ -67,7 +72,7 @@ print "number of frames " + str(num_frames)
 #frame = num_frames/2
 frame = 1
 
-f1=open('/home/ramezani/midway/lc/CUBE/'+headerFile,'r')
+f1=open('/home/ramezani/midway/lc/TrajAnalysis/2D/'+headerFile,'r')
 f2=open(output_filename, 'w+')
 head = f1.read()
 f1.close()
@@ -102,7 +107,7 @@ print 'Finished with reading data'
 binsX=np.array(binsX)
 binsY=np.array(binsY)
 scalar=np.array(scalar)
-scalar=np.reshape(scalar,(np.sqrt(len(binsX)),np.sqrt(len(binsY))))
+scalar=np.reshape(scalar,(int(np.sqrt(len(binsX))),int(np.sqrt(len(binsY)))))
 
 nn = np.sqrt(len(binsX))
 x = np.mgrid[-box:box:complex(nn)]
@@ -130,7 +135,7 @@ for curr_frame in xrange(0, frame+1) :
         continue
     else :
 #        coor = u.selectAtoms("resname 5CB").coordinates()
-        coor = u.selectAtoms("all").coordinates()
+        coor = u.selectAtoms(atom_selection).coordinates()
         for i in xrange(0,len(coor)) :
             pos1 = coor[i]
             nx = int((pos1[0]+box)/delta)
