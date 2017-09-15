@@ -58,8 +58,9 @@ print "Total number of atoms = " + str(len(u.atoms))
 num_frames = u.trajectory.numframes
 print "number of frames " + str(num_frames) 
 frame = num_frames/2
+#frame = 1
 
-f1=open('/home/ramezani/midway/lc/'+headerFile,'r')
+f1=open('/home/ramezani/midway/lc/TrajAnalysis/1D/'+headerFile,'r')
 f2=open(output_filename, 'w+')
 head = f1.read()
 f1.close()

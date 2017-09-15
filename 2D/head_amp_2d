@@ -3,7 +3,7 @@
 //Place the camera
 camera {
   orthographic
-  sky <0,1,0>          //Don't change this
+  sky <1,0,0>          //Don't change this
   direction <0,0,-1>   //Don't change this  
   right <0,-1,0>     //Don't change this
   up <1,0,0>     //Don't change this

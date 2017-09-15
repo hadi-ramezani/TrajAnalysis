@@ -64,7 +64,7 @@ print traj_filename
 # Read the trj and gro file
 u = Universe(psf_filename, traj_filename)
 box_v = u.dimensions[0:3]
-box   = box_v[0]/2
+box   = box_v[0]
 # Obtain initial information form gro and trj files
 print "Total number of atoms = " + str(len(u.atoms))
 num_frames = u.trajectory.numframes
@@ -110,16 +110,10 @@ scalar=np.array(scalar)
 scalar=np.reshape(scalar,(int(np.sqrt(len(binsX))),int(np.sqrt(len(binsY)))))
 
 nn = np.sqrt(len(binsX))
-x = np.mgrid[-box:box:complex(nn)]
-y = np.mgrid[-box:box:complex(nn)]
-f = interpolate.interp2d(x, y, scalar, kind='cubic')
-
-delta =5
-xnew = np.arange(-box, box, delta)
-ynew = np.arange(-box, box, delta)
-
-znew = f(xnew, ynew)
-
+delta = box / nn
+xnew = np.mgrid[-box:box:complex(nn)]
+ynew = np.mgrid[-box:box:complex(nn)]
+znew = scalar
 
 R = 0.0
 G = 0.0
@@ -138,12 +132,13 @@ for curr_frame in xrange(0, frame+1) :
         coor = u.selectAtoms(atom_selection).coordinates()
         for i in xrange(0,len(coor)) :
             pos1 = coor[i]
-            nx = int((pos1[0]+box)/delta)
+            nx = int((pos1[0])/delta)
+
             if nx>=len(xnew):
                 nx=len(xnew)-1
             if nx<0 :
                 nx=0
-            ny = int((pos1[1]+box)/delta)
+            ny = int((pos1[1])/delta)
             if ny>=len(ynew):
                 ny=len(ynew)-1
             if ny<0 :
@@ -152,9 +147,9 @@ for curr_frame in xrange(0, frame+1) :
             zz = znew[nx,ny]
             zz = (zz-colorLow)/(colorHigh - colorLow)
 
-            R = exp(-(zz*zz)/0.1)
+            B = exp(-(zz*zz)/0.1)
             G = exp(-(zz-0.5)*(zz-0.5)/0.1)
-            B = exp(-(zz-1.0)*(zz-1.0)/0.1)
+            R = exp(-(zz-1.0)*(zz-1.0)/0.1)
 
             VV = sqrt(R*R+G*G+B*B)
 
