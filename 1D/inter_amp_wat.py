@@ -39,7 +39,11 @@ parser.add_argument("-i",
                     action="store", nargs='?', default="../Analysis/ScalerZ.dat", 
                     required=False, dest="input",
                     help="input` filename")				
-                    
+parser.add_argument("-z",
+                    action="store", nargs='?', default= float(320),
+                    required=False, dest="max_z", type = float,
+                    help="the max z value to move the molecules to the lower side")
+
 args = parser.parse_args()
 traj_filename = args.traj
 psf_filename = args.psf
@@ -48,7 +52,7 @@ colorHigh = args.upperBond
 headerFile = args.head
 output_filename = args.output
 input_filename = args.input
-max_z = 320
+max_z = args.max_z
 shift = 10
 
 # Read the trj and gro file
@@ -175,4 +179,4 @@ for curr_frame in xrange(0, frame+1) :
             pos1[0] = pos1[0] + shift
             f2.write('sphere { < %5.3f, %5.3f, %5.3f>, %5.3f pigment {color rgb<%5.3f, %5.3f, %5.3f>} finish {specular 0.7 roughness 0.03}} \n' % (pos1[0],pos1[1],pos1[2],Ra,R,G,B))
 
-f2.close
+f2.close()
